@@ -1,0 +1,29 @@
+# Maintainer: Garrett <floft.net/contact>
+pkgname=freetron
+pkgver=r175.20c05d4
+pkgrel=1
+pkgdesc="Open-source scantron software implementation"
+arch=('arm' 'i686' 'x86_64')
+url="https://github.com/floft/freetron"
+license=('ISC')
+depends=('cppdb' 'cppcms' 'podofo' 'devil' 'libtiff' 'sqlite' 'openssl')
+makedepends=('git')
+backup=('srv/freetron/config.js')
+install=freetron.install
+source=("freetron::git+http://github.com/floft/freetron.git#branch=master")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$pkgname"
+    make
+}
+
+package() {
+    cd "$pkgname"
+    make PREFIX=/usr DESTDIR="$pkgdir" install
+}

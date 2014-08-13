@@ -1,0 +1,15 @@
+post_install() {
+    # Create keys on first install if they don't already exist
+    if [[ ! -f /srv/freetron/hmac.txt ]]; then
+        cppcms_make_key --hmac sha256 --cbc aes256 \
+            --hmac-file /srv/freetron/hmac.txt \
+            --hmac-cbc /srv/freetron/cbc.txt >/dev/null
+        chmod 600 /srv/freetron/*.txt
+    fi
+
+    # Make the database file only owner readable if it doesn't already exist
+	if [[ ! -f /srv/freetron/sqlite.db ]]; then
+        touch /srv/freetron/sqlite.db
+        chmod 600 /srv/freetron/sqlite.db
+    fi
+}
