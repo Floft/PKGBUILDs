@@ -12,7 +12,6 @@ conflicts=('cinelerra-cv')
 source=(https://sourceforge.net/projects/heroines/files/cinelerra-$pkgver.src.tar.xz
         quicktime.patch
         plugin_dir.patch
-        speech_tools.patch
         texi2html.patch
         gpac.patch
         libavcodec.patch
@@ -21,7 +20,6 @@ source=(https://sourceforge.net/projects/heroines/files/cinelerra-$pkgver.src.ta
 md5sums=('3da60ce525abc278a028c8889d5b9fd6'
          '0babae23875017653914bd121477ec97'
          'cf9861e808948fe8ea4d4be27765ffa5'
-         '1d15ee1b2e783a4f8ad8c02d53a77439'
          '431503db853032e14ade0438ed3eea29'
          'cefa6a8efe5ba5bc00ad9fc5649dd25c'
          '4dd7fd1184dfe3813a8821d47ef70a55'
