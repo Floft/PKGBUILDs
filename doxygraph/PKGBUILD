@@ -1,0 +1,27 @@
+# Maintainer: Garrett <floft.net/contact>
+pkgname=doxygraph
+pkgver=fd9474126f6c
+pkgrel=1
+epoch=0
+pkgdesc="Automated reverse engineering of interactive UML class diagrams"
+arch=('i686' 'x86_64')
+url="https://code.google.com/p/doxygraph"
+license=('MPL')
+# TODO: not all the depends yet
+depends=('doxygen' 'perl-lib-abs' 'perl-namespace-autoclean')
+makedepends=('perl')
+source=("https://$pkgname.googlecode.com/archive/$pkgver.tar.gz")
+md5sums=('SKIP') # Always different, thanks Google
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver/doxygraph"
+  perl Makefile.PL
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver/doxygraph"
+  make DESTDIR="$pkgdir/" install
+  install -d "$pkgdir/usr/share/$pkgname/"
+  cp -r "$srcdir/$pkgname-$pkgver/doxyviz" "$pkgdir/usr/share/$pkgname/"
+}
