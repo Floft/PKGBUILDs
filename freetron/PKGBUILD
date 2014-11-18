@@ -1,6 +1,6 @@
 # Maintainer: Garrett <floft.net/contact>
 pkgname=freetron
-pkgver=r175.20c05d4
+pkgver=r184.a86c263
 pkgrel=1
 pkgdesc="Open-source scantron software implementation"
 arch=('arm' 'i686' 'x86_64')
