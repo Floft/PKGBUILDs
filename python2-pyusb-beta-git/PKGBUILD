@@ -1,0 +1,34 @@
+# Maintainer: Garrett <floft.net/contact>
+# Contributor: Jonathan Kotta <jpkotta AT gmail DOT com>
+pkgname=python2-pyusb
+pkgver=1.0.0b2.r16.g1030f9e
+pkgrel=1
+pkgdesc="A pure Python module which provides USB access."
+arch=('any')
+url="https://github.com/walac/pyusb"
+license=('custom')
+depends=('python2' 'libusb-compat')
+makedepends=('python2-distribute' 'git')
+conflicts=("pyusb=$pkgver" "python2-pyusb-beta")
+provides=(pyusb python2-pyusb)
+source=("$pkgname::git+https://github.com/walac/pyusb")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$pkgname"
+    ( set -o pipefail
+        git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g' ||
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    )
+}
+
+build() {
+	cd "$srcdir/$pkgname"
+	python2 setup.py build
+}
+
+package() {
+	cd "$srcdir/$pkgname"
+	python2 setup.py install -f --root="$pkgdir"
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
