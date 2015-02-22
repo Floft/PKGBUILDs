@@ -6,7 +6,7 @@ pkgdesc="Python library for programming/debugging ARM Cortex-M microcontrollers 
 arch=('any')
 url="https://github.com/mbedmicro/pyOCD"
 license=('Apache')
-depends=('python2' 'python2-pyusb-beta' 'python2-gdblib-git')
+depends=('python2' 'python2-pyusb-beta')
 makedepends=('git')
 options=(!emptydirs)
 source=("$pkgname::git+https://github.com/mbedmicro/pyOCD#branch=master")

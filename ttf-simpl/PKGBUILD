@@ -1,0 +1,29 @@
+# Maintainer: Garrett <floft.net/contact>
+pkgname=ttf-simpl
+pkgver=0.1
+pkgrel=1
+filename=SImPL_medium_APL.ttf
+url="http://aplwiki.com/AplCharacters"
+depends=('fontconfig' 'xorg-font-utils')
+pkgdesc="APL characters"
+license=('custom')
+arch=('any')
+md5sums=('03263f8975905601cf2018bab281e1f5')
+source=("$filename::http://aplwiki.com/AplCharacters?action=AttachFile&do=get&target=$filename")
+install="$pkgname.install"
+
+package()
+{
+  mkdir -p "$pkgdir/usr/share/fonts/TTF"
+  mkdir -p "$pkgdir/usr/share/licenses/$pkgname"
+  cp "$srcdir"/*.ttf "$pkgdir/usr/share/fonts/TTF"
+
+  cat > "$pkgdir/usr/share/licenses/$pkgname/LICENSE" <<EOF
+Copyright (c) Amadeus Information Systems Limited, 1996~2004,
+Copyright (c) Phil Chastney, 2005~2009
+
+This font is free for personal use only. All other rights reserved: in
+particular, this font may not be copied, sold or otherwise distributed
+without permission. Other rights are negotiable.
+EOF
+}
