@@ -1,26 +1,31 @@
-# Maintainer: Denis Fokin <foks.ua@gmail.com>
+# Contributor: Garrett <floft.net/contact>
 pkgname=octave-symbolic
 pkgver=2.0.0
 pkgrel=1
-pkgdesc="Symbolic toolbox based on GiNaC and CLN"
+pkgdesc="A Symbolic Package for Octave using SymPy"
 arch=(any)
-url="http://octave.sourceforge.net/symbolic/"
-license=('GPL')
-depends=('octave>=3.1.55' 'ginac>=1.6.0')
-makedepends=()
-optdepends=()
-backup=()
-options=()
-install=octave-symbolic.install
-source=("http://downloads.sourceforge.net/octave/symbolic-$pkgver.tar.gz")
-noextract=("symbolic-$pkgver.tar.gz")
-md5sums=('e7b4a8c37ac175029c25bceacd3641ff')
+url="https://github.com/cbm755/octsympy"
+license=('GPLv3')
+depends=('octave' 'python2-sympy')
+makedepends=('git')
+install="octave-symbolic.install"
+source=("symbolic-$pkgver::git+$url#tag=v2.0.0" "python2.patch")
+md5sums=('SKIP' 'b70b951089af9b926ccf5188a19bbfe6')
+
+build() {
+    cd "$srcdir/symbolic-$pkgver"
+    patch -p1 -i "$srcdir/python2.patch"
+    cd "src"
+    make
+    cd "$srcdir"
+    tar -zcvf "symbolic-$pkgver.tar.gz" "symbolic-$pkgver"
+}
 
 package() {
   cd "$srcdir"
-  mkdir -p $pkgdir/usr/share/octave/packages
-  mkdir -p $pkgdir/usr/lib/octave/packages
-  mkdir -p builddir
+  mkdir -p "$pkgdir/usr/share/octave/packages"
+  mkdir -p "$pkgdir/usr/lib/octave/packages"
+  mkdir -p "builddir"
   echo "pkg build -nodeps builddir symbolic-$pkgver.tar.gz" | octave --silent
-  cp builddir/symbolic-$pkgver.tar.gz $pkgdir/usr/share/octave/symbolic.tar.gz
+  cp "builddir/symbolic-$pkgver.tar.gz" "$pkgdir/usr/share/octave/symbolic.tar.gz"
 }

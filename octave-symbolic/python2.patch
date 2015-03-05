@@ -1,0 +1,39 @@
+diff --git a/inst/private/python_ipc_popen2.m b/inst/private/python_ipc_popen2.m
+index 4acd304..9b63be2 100644
+--- a/inst/private/python_ipc_popen2.m
++++ b/inst/private/python_ipc_popen2.m
+@@ -45,7 +45,7 @@ function [A, out] = python_ipc_popen2(what, cmd, varargin)
+         disp(['Detected a Windows system: using "mydbpy.bat" to workaround Octave bug'])
+         pyexec = 'mydbpy.bat';
+       else
+-        pyexec = 'python';
++        pyexec = 'python2';
+       end
+     end
+     % perhaps the the '-i' is not always wanted?
+diff --git a/inst/private/python_ipc_sysoneline.m b/inst/private/python_ipc_sysoneline.m
+index db9dc22..7e88b5a 100644
+--- a/inst/private/python_ipc_sysoneline.m
++++ b/inst/private/python_ipc_sysoneline.m
+@@ -62,7 +62,7 @@ function [A, out] = python_ipc_sysoneline(what, cmd, mktmpfile, varargin)
+ 
+   pyexec = sympref('python');
+   if (isempty(pyexec))
+-    pyexec = 'python';
++    pyexec = 'python2';
+   end
+ 
+   bigs = [headers s1 s2 s3];
+diff --git a/inst/private/python_ipc_system.m b/inst/private/python_ipc_system.m
+index 8c504da..a5ab942 100644
+--- a/inst/private/python_ipc_system.m
++++ b/inst/private/python_ipc_system.m
+@@ -45,7 +45,7 @@ function [A, out] = python_ipc_system(what, cmd, mktmpfile, varargin)
+ 
+   pyexec = sympref('python');
+   if (isempty(pyexec))
+-    pyexec = 'python';
++    pyexec = 'python2';
+   end
+ 
+   %% FIXME: Issue #63: with new regexp code on Matlab
