@@ -1,12 +1,13 @@
 # Maintainer: Garrett <floft.net/contact>
 pkgname=cinelerra-heroine
 pkgver=4.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Cinelerra from the HeroineWarrior.com (64-bit)"
 arch=('x86_64')
 url="http://www.heroinewarrior.com/cinelerra.php"
 license=('GPL')
-depends=('libpng' 'freeglut' 'libxv' 'ncurses' 'libva' 'openexr')
+depends=('libpng' 'freeglut' 'libxv' 'ncurses' 'libva'
+         'openexr' 'libxft' 'freetype2' 'alsa-lib')
 makedepends=('yasm' 'nasm' 'libtool')
 conflicts=('cinelerra-cv')
 source=(https://sourceforge.net/projects/heroines/files/cinelerra-$pkgver.src.tar.xz
