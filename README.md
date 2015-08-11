@@ -1,5 +1,5 @@
 PKGBUILDs
 =========
 This is where I create, test, and maintain [AUR](https://aur.archlinux.org)
-packages. Before using any of them, please check to see if the package is in
-the AUR. You might as well use that one if it's there.
+packages. The submodules are the ones that are actually in the AUR, so grab
+them from there.
