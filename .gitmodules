@@ -1,0 +1,21 @@
+[submodule "cinelerra-heroine"]
+	path = cinelerra-heroine
+	url = ssh://aur@aur.archlinux.org/cinelerra-heroine.git
+[submodule "gimp-plugin-insanebump"]
+	path = gimp-plugin-insanebump
+	url = ssh://aur@aur.archlinux.org/gimp-plugin-insanebump.git
+[submodule "gimp-plugin-layerfx"]
+	path = gimp-plugin-layerfx
+	url = ssh://aur@aur.archlinux.org/gimp-plugin-layerfx.git
+[submodule "openlp"]
+	path = openlp
+	url = ssh://aur@aur.archlinux.org/openlp.git
+[submodule "python2-pyocd-git"]
+	path = python2-pyocd-git
+	url = ssh://aur@aur.archlinux.org/python2-pyocd-git.git
+[submodule "spinach"]
+	path = spinach
+	url = ssh://aur@aur.archlinux.org/spinach.git
+[submodule "worldwind"]
+	path = worldwind
+	url = ssh://aur@aur.archlinux.org/worldwind.git
