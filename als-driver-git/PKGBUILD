@@ -1,0 +1,35 @@
+# Maintainer: Teo Mrnjavac <teo@kde.org>
+# Contributor: Garrett <floft.net/contact>
+pkgname=als-driver-git
+pkgver=r27.569f584
+pkgrel=1
+pkgdesc="ASUS Zenbook ambient light sensor kernel module."
+arch=('i686' 'x86_64')
+url="https://github.com/danieleds/als"
+license=('GPL2')
+makedepends=('git' 'linux-headers')
+provides=('als-driver')
+conflicts=('als-driver')
+install='als-driver.install'
+
+source=("$pkgname::git+https://github.com/danieleds/als")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$pkgname"
+    ( set -o pipefail
+        git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g' ||
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    )
+}
+
+build() {
+	cd "$srcdir/$pkgname"
+    make
+}
+
+package() {
+    cd "$srcdir/$pkgname"
+    local dir="$(basename "$(echo /usr/lib/modules/extramodules-* | tail -n 1)")"
+    install -Dm644 als.ko "${pkgdir}/usr/lib/modules/${dir}/als.ko"
+}

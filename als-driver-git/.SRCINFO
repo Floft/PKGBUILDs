@@ -1,0 +1,18 @@
+pkgbase = als-driver-git
+	pkgdesc = ASUS Zenbook ambient light sensor kernel module.
+	pkgver = r27.569f584
+	pkgrel = 1
+	url = https://github.com/danieleds/als
+	install = als-driver.install
+	arch = i686
+	arch = x86_64
+	license = GPL2
+	makedepends = git
+	makedepends = linux-headers
+	provides = als-driver
+	conflicts = als-driver
+	source = als-driver-git::git+https://github.com/danieleds/als
+	md5sums = SKIP
+
+pkgname = als-driver-git
+
