@@ -19,3 +19,6 @@
 [submodule "worldwind"]
 	path = worldwind
 	url = ssh://aur@aur.archlinux.org/worldwind.git
+[submodule "libdrng"]
+	path = libdrng
+	url = ssh://aur@aur.archlinux.org/libdrng.git
