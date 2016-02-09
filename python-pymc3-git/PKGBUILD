@@ -1,0 +1,38 @@
+# Contributor: Garrett <floft.net/contact>
+# Contributor: xia0er <xia0er@gmail.com> 
+pkgname=python-pymc3-git
+pkgver="3.0beta"
+pkgrel=1
+pkgdesc="Markov chain Monte Carlo for Python"
+arch=('i686' 'x86_64')
+url="https://github.com/pymc-devs/pymc3"
+license=('MIT')
+source=("git+https://github.com/pymc-devs/pymc3")
+makedepends=("gcc-fortran")
+conflicts=('python-pymc3')
+provides=('python-pymc3')
+md5sums=('SKIP')
+
+package_python2-pymc3() {
+  depends=('python2-numpy' 'python2-scipy' 'python2-matplotlib'
+      'python2-pytables' 'ipython2' 'pydot' 'python2-nose'
+      'python2-enum34' 'python2-theano' 'python2-patsy'
+      'python2-statsmodels' 'python2-pandas')
+
+  cd "$srcdir/pymc3"
+  export LDFLAGS="$LDFLAGS -shared"
+  python2 setup.py build
+  python2 setup.py install --prefix=/usr --root="$pkgdir" || return 1
+}
+
+package() {
+  depends=('python-numpy' 'python-scipy' 'python-matplotlib'
+      'python-pytables' 'ipython' 'pydot' 'python-nose'
+      'python-theano' 'python2-patsy' 'python-statsmodels'
+      'python-pandas')
+
+  cd "$srcdir/pymc3"
+  export LDFLAGS="$LDFLAGS -shared"
+  python3 setup.py build
+  python3 setup.py install --prefix=/usr --root="$pkgdir" || return 1
+}
