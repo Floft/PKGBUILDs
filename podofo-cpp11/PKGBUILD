@@ -36,6 +36,6 @@ build() {
 }
 
 package() {
-  cd "$srcdir-${pkgver}/build"
+  cd "podofo-${pkgver}/build"
   make DESTDIR="$pkgdir" install
 }
