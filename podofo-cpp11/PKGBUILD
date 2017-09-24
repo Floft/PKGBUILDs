@@ -21,7 +21,7 @@ source=("http://downloads.sourceforge.net/podofo/podofo-${pkgver}.tar.gz" "c++11
 md5sums=('4751a6cf41250bea550a73ff960b7228' 'c3fb541b2d28bed383e64bd170ecc90d')
 
 build() {
-  cd podofo-${pkgver}
+  cd "podofo-${pkgver}"
   patch -i "$srcdir/c++11.patch"
 
   mkdir build
@@ -36,6 +36,6 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${pkgver}/build
-  make DESTDIR=$pkgdir install
+  cd "$srcdir-${pkgver}/build"
+  make DESTDIR="$pkgdir" install
 }
