@@ -1,0 +1,21 @@
+# Contributor: Garrett <floft.net/contact>
+pkgname=python-sloth-git
+pkgver=1.0.r83.gcc1c3ae
+pkgrel=1
+pkgdesc="Sloth is a tool for labeling image and video data for computer vision research."
+arch=('i686' 'x86_64')
+url="https://github.com/cvhciKIT/sloth"
+license=('MIT')
+source=("git+https://github.com/cvhciKIT/sloth")
+depends=("python" "python-pillow")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/sloth"
+  git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//'
+}
+
+package() {
+  cd "$srcdir/sloth"
+  python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
