@@ -4,7 +4,7 @@ Make sure you are in the power group so you can shutdown, restart, etc.
 and then edit /etc/linux-control-client.conf. Finally, run:
     pip install --user plocate python-libxdo    
     sudo systemctl restart polkit
-    sudo systemctl enable linux-control
-    sudo systemctl restart linux-control
+    sudo systemctl enable linux-control-client
+    sudo systemctl restart linux-control-client
 EOF
 }

@@ -54,9 +54,9 @@ EOF
 
     # Systemd service for when not using a graphical environment
     mkdir -p "${pkgdir}/usr/lib/systemd/system"
-    cat > "${pkgdir}/usr/lib/systemd/system/linux-control.service" <<EOF
+    cat > "${pkgdir}/usr/lib/systemd/system/linux-control-client.service" <<EOF
 [Unit]
-Description=Linux Control
+Description=Linux Control Client
 [Service]
 Environment=DISPLAY=:0
 ExecStart=/usr/bin/linux-control-client
