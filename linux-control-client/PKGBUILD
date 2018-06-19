@@ -1,0 +1,70 @@
+# Maintainer: Garrett <https://floft.net>
+pkgname=linux-control-client
+pkgver=r59.1a703c8
+pkgrel=1
+pkgdesc="Control your Linux laptop/desktop via Google Assistant"
+arch=('any')
+url="https://github.com/floft/linux-control"
+license=('ISC')
+depends=('python' 'python-psutil' 'dex' 'python-yaml' 'python-pulse-control-git')
+# Note, also required via pip: pip install --user plocate python-libxdo
+makedepends=('git')
+backup=('etc/linux-control-client.yaml')
+install=linux-control-client.install
+source=("$pkgname::git+https://github.com/floft/linux-control")
+md5sums=('SKIP')
+
+# TODO change for whatever user account you wish to run as
+user="garrett"
+group="users"
+
+pkgver() {
+    cd "$pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+    cd "$pkgname"
+    
+    # Client config file
+    mkdir -p "${pkgdir}/etc"
+    install -Dm644 "client/config.yaml.example" "${pkgdir}/etc/linux-control-client.yaml"
+
+    # Client run script
+    mkdir -p "${pkgdir}/usr/bin"
+    cat > "${pkgdir}/usr/bin/linux-control-client" <<EOF
+#!/bin/bash
+python3 /usr/lib/linux-control/client.py /etc/linux-control-client.yaml
+EOF
+    chmod +x "${pkgdir}/usr/bin/linux-control-client"
+
+    # Client Python file
+    mkdir -p "${pkgdir}/usr/lib/linux-control"
+    install -Dm644 "client/main.py" "${pkgdir}/usr/lib/linux-control/client.py"
+
+    # Allow powering off
+    mkdir -p "${pkgdir}/etc/polkit-1/rules.d"
+    cat > "${pkgdir}/etc/polkit-1/rules.d/00-allow-poweroff.rules" <<EOF
+polkit.addRule(function(action, subject) {
+    if (action.id.match("org.freedesktop.login1.") && subject.isInGroup("power")) {
+        return polkit.Result.YES;
+    }
+});
+EOF
+
+    # Systemd service for when not using a graphical environment
+    mkdir -p "${pkgdir}/usr/lib/systemd/system"
+    cat > "${pkgdir}/usr/lib/systemd/system/linux-control.service" <<EOF
+[Unit]
+Description=Linux Control
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/linux-control-client
+Restart=always
+RestartSec=3
+User=$user
+Group=$group
+[Install]
+WantedBy=multi-user.target
+EOF
+}
