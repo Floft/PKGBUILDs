@@ -1,0 +1,22 @@
+# Based on: tt-rss-plugin-api-resize-git
+pkgname=tt-rss-plugin-feedreader
+pkgver=v2.11.0
+pkgrel=1
+pkgdesc="TT-RSS plugin for FeedReader"
+arch=('any')
+url="https://github.com/jangernert/FeedReader/tree/master/data/tt-rss-feedreader-plugin"
+license=('GPL3')
+depends=('tt-rss')
+makedepends=('git')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+source=("${pkgname%-git}::git+https://github.com/jangernert/FeedReader.git#tag=${pkgver}")
+md5sums=('SKIP')
+
+package() {
+	installdir="${pkgdir}/usr/share/webapps/tt-rss/plugins/api_feedreader"
+	install -m 755 -d "${installdir}"
+	cd "$srcdir/${pkgname%-git}"
+	cp -R data/tt-rss-feedreader-plugin/api_feedreader/* "${installdir}"
+	find "${installdir}" -type d -exec chmod 755 '{}' \; -type f -exec chmod 644 '{}' \;
+}
