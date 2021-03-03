@@ -1,0 +1,29 @@
+# Contributor: Garrett <floft.net/contact>
+pkgname=python-vowpalwabbit
+pkgver=8.2.0
+pkgrel=1
+pkgdesc="Vowpal Wabbit is a machine learning system which pushes the frontier of machine learning with techniques such as online, hashing, allreduce, reductions, learning2search, active, and interactive learning."
+arch=('i686' 'x86_64')
+url="https://github.com/JohnLangford/vowpal_wabbit"
+license=('BSD')
+source=("git+https://github.com/JohnLangford/vowpal_wabbit.git#tag=$pkgver")
+depends=("python" "boost")
+md5sums=('SKIP')
+
+#pkgver() {
+#    cd "vowpal_wabbit"
+#    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+#}
+
+build() {
+    export PYTHON_VERSION=3
+    cd "vowpal_wabbit"
+    ./autogen.sh
+    make
+    make -C python things
+}
+
+package() {
+    cd "vowpal_wabbit/python"
+    python3 setup.py install --root="$pkgdir" --prefix=/usr
+}

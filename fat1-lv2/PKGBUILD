@@ -1,0 +1,35 @@
+# Maintainer: Garrett <floft.net/contact>
+pkgname=fat1-lv2-git
+pkgver=r73.474cdc9
+pkgrel=1
+pkgdesc="LV2 port for the zita-at1"
+arch=('i686' 'x86_64')
+url="https://github.com/x42/fat1.lv2"
+license=('GPL')
+groups=('lv2-plugins')
+depends=("glibc")
+makedepends=("git" "lv2")
+source=("git+https://github.com/x42/fat1.lv2.git")
+md5sums=('SKIP')
+_reponame="fat1.lv2"
+
+
+pkgver() {
+
+  cd "${srcdir}"/"${_reponame}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+
+}
+
+build() {
+  cd "$srcdir/${_reponame}"
+
+  make submodules
+  make
+}
+
+package() {
+  cd "$srcdir/${_reponame}"
+
+  make PREFIX=/usr DESTDIR="$pkgdir/" install
+}
