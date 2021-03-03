@@ -7,7 +7,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/cvhciKIT/sloth"
 license=('MIT')
 source=("git+https://github.com/cvhciKIT/sloth")
-depends=("python" "python-pillow")
+depends=("python" "python-pillow" "python-pyqt4")
 md5sums=('SKIP')
 
 pkgver() {
