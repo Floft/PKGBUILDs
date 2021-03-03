@@ -1,0 +1,53 @@
+# See:
+# - https://wiki.archlinux.org/index.php/Node.js_package_guidelines#Using_npm
+# - https://github.com/shlinkio/shlink-web-client#serve-project-in-subpath
+pkgname="shlink-web-client"
+pkgver=3.0.1
+pkgrel=1
+pkgdesc="A React-based client application for Shlink"
+url="https://shlink.io"
+license=("MIT")
+arch=("any")
+makedepends=("npm")
+depends=()
+optdepends=("apache: web server"
+            "nginx: web server")
+source=("https://github.com/shlinkio/shlink-web-client/archive/v$pkgver.zip")
+sha256sums=("2f0a40f4e49ceb007cb4200ff48789712d3cc816deb3654a093d24985d27c39d")
+options=("!strip")
+
+# Doesn't work in subdirectory
+#source=("https://github.com/shlinkio/shlink-web-client/download/v$pkgver/${pkgname}_${pkgver}_dist.zip")
+#sha256sums=("7d2a50775ca3a01723de9a5eadfe4eb6b6c233544c1972c6df155687a35439da")
+#package(){
+#    cd "${pkgname}_${pkgver}_dist"
+#    install -d "$pkgdir/usr/share/webapps/$pkgname"
+#    cp -r * "$pkgdir/usr/share/webapps/$pkgname"
+#}
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    sed -i 's/"homepage": "/&\/shlink-web-client/g' package.json
+}
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    npm install --cache ../cache .
+    npm run build
+}
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}/build"
+
+    # Copy files
+    install -d "$pkgdir/usr/share/webapps/$pkgname"
+    cp -r * "$pkgdir/usr/share/webapps/$pkgname"
+
+    # Non-deterministic race in npm gives 777 permissions to random directories.
+    # See https://github.com/npm/cli/issues/1103 for details.
+    find "${pkgdir}/usr" -type d -exec chmod 755 {} +
+
+    # npm gives ownership of ALL FILES to build user
+    # https://bugs.archlinux.org/task/63396
+    chown -R root:root "${pkgdir}"
+}
